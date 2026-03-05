@@ -1,17 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Fortune</title>
+    <title>오늘의 운세 - 천지신명</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Your Daily Fortune</h1>
-        <button id="fortune-button">Get Your Fortune</button>
-        <p id="fortune-text"></p>
-    </div>
+    <canvas id="stars-canvas"></canvas>
+
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-symbol">&#9775;</span>
+                <span class="logo-text">천지신명</span>
+            </div>
+            <button class="theme-toggle" id="theme-toggle" aria-label="테마 전환">
+                <span class="toggle-icon sun">&#9728;</span>
+                <span class="toggle-icon moon">&#9790;</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="orb-wrapper">
+                <div class="orb">
+                    <div class="orb-inner"></div>
+                    <div class="orb-glow"></div>
+                    <div class="orb-particles">
+                        <span></span><span></span><span></span>
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+            <h1 class="hero-title">오늘의 운세</h1>
+            <p class="hero-subtitle">천지신명이 당신의 오늘을 살펴봅니다</p>
+            <p class="today-date" id="today-date"></p>
+        </section>
+
+        <!-- Input Section -->
+        <section class="input-section" id="input-section">
+            <div class="input-card">
+                <h2 class="input-title">생년월일을 입력하세요</h2>
+                <p class="input-desc">정확한 운세를 위해 태어난 날짜를 알려주세요</p>
+                <div class="birth-input-group">
+                    <input type="number" id="birth-year" placeholder="년 (예: 1995)" min="1900" max="2024" maxlength="4">
+                    <input type="number" id="birth-month" placeholder="월 (1~12)" min="1" max="12">
+                    <input type="number" id="birth-day" placeholder="일 (1~31)" min="1" max="31">
+                </div>
+                <div class="gender-group">
+                    <label class="gender-label">
+                        <input type="radio" name="gender" value="male" checked>
+                        <span class="gender-btn">남성</span>
+                    </label>
+                    <label class="gender-label">
+                        <input type="radio" name="gender" value="female">
+                        <span class="gender-btn">여성</span>
+                    </label>
+                </div>
+                <button class="fortune-btn" id="fortune-btn">
+                    <span class="btn-text">운세 보기</span>
+                    <span class="btn-icon">&#10024;</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Loading Section -->
+        <section class="loading-section hidden" id="loading-section">
+            <div class="loading-orb">
+                <div class="loading-ring ring1"></div>
+                <div class="loading-ring ring2"></div>
+                <div class="loading-ring ring3"></div>
+                <span class="loading-symbol">&#9775;</span>
+            </div>
+            <p class="loading-text" id="loading-text">천지신명이 운세를 살피고 있습니다...</p>
+        </section>
+
+        <!-- Result Section -->
+        <section class="result-section hidden" id="result-section">
+            <div class="result-header">
+                <p class="result-person" id="result-person"></p>
+                <h2 class="result-title">오늘의 운세</h2>
+                <div class="lucky-info" id="lucky-info"></div>
+            </div>
+
+            <!-- Overall Fortune -->
+            <div class="overall-fortune" id="overall-fortune">
+                <div class="overall-stars" id="overall-stars"></div>
+                <p class="overall-text" id="overall-text"></p>
+            </div>
+
+            <!-- Fortune Cards -->
+            <div class="fortune-grid" id="fortune-grid"></div>
+
+            <!-- One-line Advice -->
+            <div class="advice-card" id="advice-card">
+                <div class="advice-label">오늘의 한마디</div>
+                <p class="advice-text" id="advice-text"></p>
+            </div>
+
+            <button class="retry-btn" id="retry-btn">
+                <span>다시 보기</span>
+            </button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>본 운세는 오락 목적으로 제공됩니다 &bull; 천지신명 &copy; 2025</p>
+    </footer>
+
     <script src="main.js"></script>
 </body>
 </html>
