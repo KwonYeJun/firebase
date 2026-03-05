@@ -109,6 +109,30 @@
         </section>
     </main>
 
+    <!-- Community Quote Section -->
+    <section class="community-section">
+        <div class="community-inner">
+            <div class="community-header">
+                <span class="community-icon">&#10024;</span>
+                <h2 class="community-title">오늘의 한 줄을 남겨보세요</h2>
+                <p class="community-desc">
+                    운세를 보고 마음에 와닿은 문장, 좋아하는 명언,<br>
+                    영화나 드라마 속 인상 깊었던 대사를 자유롭게 공유해주세요.
+                </p>
+                <div class="community-examples">
+                    <span class="example-tag">&#127916; 영화 대사</span>
+                    <span class="example-tag">&#128218; 책 속 명언</span>
+                    <span class="example-tag">&#127897; 드라마 명대사</span>
+                    <span class="example-tag">&#128161; 오늘의 깨달음</span>
+                    <span class="example-tag">&#127800; 좋아하는 글귀</span>
+                </div>
+            </div>
+            <div class="disqus-wrap">
+                <div id="disqus_thread"></div>
+            </div>
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="footer-inner">
             <p class="footer-copy">본 운세는 오락 목적으로 제공됩니다 &bull; 천지신명 &copy; 2025</p>
@@ -169,5 +193,18 @@
     </div>
 
     <script src="main.js"></script>
+    <script>
+        var disqus_config = function () {
+            this.page.url = window.location.href;
+            this.page.identifier = 'fortune-9-main';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://fortune-9.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>댓글을 보려면 JavaScript를 활성화해주세요. <a href="https://disqus.com/?ref_noscript">Disqus 댓글 서비스</a></noscript>
 </body>
 </html>
