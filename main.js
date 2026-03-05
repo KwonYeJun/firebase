@@ -372,11 +372,83 @@ function resetToInput() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ── 제휴 문의 모달 ────────────────────────────────────────────
+function initPartnerModal() {
+    const overlay = document.getElementById('modal-overlay');
+    const openBtn = document.getElementById('partner-btn');
+    const closeBtn = document.getElementById('modal-close');
+    const form = document.getElementById('partner-form');
+    const submitBtn = document.getElementById('form-submit');
+    const successPanel = document.getElementById('form-success');
+    const successClose = document.getElementById('success-close');
+
+    function openModal() {
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+        // Reset form after close animation
+        setTimeout(() => {
+            form.reset();
+            form.classList.remove('hidden');
+            successPanel.classList.add('hidden');
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.submit-text').textContent = '문의 보내기';
+        }, 200);
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    successClose.addEventListener('click', closeModal);
+
+    // Close on overlay backdrop click
+    overlay.addEventListener('click', e => {
+        if (e.target === overlay) closeModal();
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && !overlay.classList.contains('hidden')) closeModal();
+    });
+
+    // Form submission via Formspree
+    form.addEventListener('submit', async e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.querySelector('.submit-text').textContent = '전송 중...';
+
+        const data = new FormData(form);
+
+        try {
+            const res = await fetch('https://formspree.io/f/xbdzrovq', {
+                method: 'POST',
+                body: data,
+                headers: { Accept: 'application/json' },
+            });
+
+            if (res.ok) {
+                form.classList.add('hidden');
+                successPanel.classList.remove('hidden');
+            } else {
+                throw new Error('전송 실패');
+            }
+        } catch {
+            submitBtn.disabled = false;
+            submitBtn.querySelector('.submit-text').textContent = '문의 보내기';
+            alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        }
+    });
+}
+
 // ── 초기화 ────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     initStars();
     initTheme();
     initDate();
+    initPartnerModal();
 
     document.getElementById('fortune-btn').addEventListener('click', showFortune);
     document.getElementById('retry-btn').addEventListener('click', resetToInput);
